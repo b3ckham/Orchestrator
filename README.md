@@ -16,7 +16,7 @@ The primary source of truth for this repository is the **Orchestrator Specificat
     - **Rule Service**: Drools-based decision engine (Java).
     - **Context Provider**: Aggregates facts from Member/Wallet/Compliance services.
     - **Action Adapter**: Executes side-effects (HTTP calls).
-    - **N8n**: Manages human workflows and notifications.
+    - **N8n**: Manages human operation workflows and notifications.
 
 ## 🔄 Key Sequences
 - **Runtime Execution Flow**: [Section 7.2](docs/Orchestrator_Specification.md#72-runtime-execution-flow)
