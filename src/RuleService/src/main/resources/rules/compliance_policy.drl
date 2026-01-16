@@ -1,0 +1,44 @@
+package rules;
+
+import com.orchestrator.rules.model.Member;
+import com.orchestrator.rules.model.Wallet;
+import com.orchestrator.rules.model.Compliance;
+import com.orchestrator.rules.model.RuleEvaluationResponse;
+
+global com.orchestrator.rules.model.RuleEvaluationResponse response;
+
+rule "Detect High Risk Compliance"
+    agenda-group "compliance_policy"
+    when
+        $c : Compliance( riskLevel == "High" )
+    then
+        response.setMatch(true);
+        response.setOutcome("RISK_DETECTED");
+        response.addReason("Member has High Risk Level");
+        System.out.println("Rule Fired: High Risk Compliance");
+end
+
+rule "Auto Confiscate if Status is Confiscated"
+    agenda-group "compliance_policy"
+    when
+        $m : Member( status == "Confiscated" )
+    then
+
+        response.setMatch(true);
+        response.setOutcome("CONFISCATION_REQUIRED");
+        response.addReason("Member Status is CONFISCATED");
+        System.out.println("Rule Fired: Auto Confiscate");
+end
+
+rule "Unlock Wallet if Active and Zero Risk"
+    agenda-group "compliance_policy"
+    when
+        $m : Member( status == "Active" )
+        $c : Compliance( riskLevel == "Low" )
+        $w : Wallet( status == "Locked" )
+    then
+        response.setMatch(true);
+        response.setOutcome("SAFE_TO_UNLOCK");
+        response.addReason("Member is Active and Low Risk");
+        System.out.println("Rule Fired: Unlock Wallet");
+end

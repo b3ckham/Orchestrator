@@ -1,0 +1,9 @@
+com/orchestrator/rules/model/RuleDeploymentRequest.class
+com/orchestrator/rules/model/RuleEvaluationResponse.class
+com/orchestrator/rules/model/Compliance.class
+com/orchestrator/rules/controller/RuleController.class
+com/orchestrator/rules/model/Wallet.class
+com/orchestrator/rules/RuleServiceApplication.class
+com/orchestrator/rules/model/ContextPayload.class
+com/orchestrator/rules/model/Member.class
+com/orchestrator/rules/model/RuleEvaluationRequest.class

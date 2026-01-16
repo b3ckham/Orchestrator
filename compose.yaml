@@ -1,0 +1,43 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: orchestrator-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: MemberDB
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./infrastructure/mysql/init:/docker-entrypoint-initdb.d
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: orchestrator-rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_PASS: guest
+
+  redis:
+    image: redis:alpine
+    container_name: orchestrator-redis
+    restart: always
+    ports:
+      - "6379:6379"
+
+  n8n:
+    image: n8nio/n8n:2.3.0
+    container_name: orchestrator-n8n
+    restart: always
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+      - N8N_SECURE_COOKIE=false
+    volumes:
+      - ./infrastructure/n8n:/home/node/.n8n

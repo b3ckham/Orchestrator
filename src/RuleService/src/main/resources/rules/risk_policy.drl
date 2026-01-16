@@ -1,0 +1,30 @@
+package rules;
+
+import com.orchestrator.rules.model.Member;
+import com.orchestrator.rules.model.Wallet;
+import com.orchestrator.rules.model.Compliance;
+import com.orchestrator.rules.model.RuleEvaluationResponse;
+
+global com.orchestrator.rules.model.RuleEvaluationResponse response;
+
+rule "Detect High Risk"
+    agenda-group "risk_policy"
+    when
+        $c : Compliance( riskLevel == "High" )
+    then
+        response.setMatch(true);
+        response.setOutcome("HIGH_RISK_DETECTED");
+        response.addReason("Compliance Risk Level is High");
+        System.out.println("Rule Fired: Detect High Risk (Risk Policy)");
+end
+
+rule "Detect Medium Risk"
+    agenda-group "risk_policy"
+    when
+        $c : Compliance( riskLevel == "Medium" )
+    then
+        response.setMatch(true);
+        response.setOutcome("MEDIUM_RISK");
+        response.addReason("Compliance Risk Level is Medium");
+        System.out.println("Rule Fired: Detect Medium Risk");
+end
